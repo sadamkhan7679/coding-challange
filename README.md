@@ -2,7 +2,7 @@
 
 Your challenge is to complete two utility functions and ensure their corresponding tests pass.
 
-NOTE: If you have any questions about this, please email me: hartsoughdavid@gmail.com
+
 
 **Steps**
 

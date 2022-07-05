@@ -24,12 +24,42 @@ type Metadata = {
  */
 export default function getMetadata(html) {
   // TODO: delete and replace this with your code
+  // parse html string without external libraries
+  const dom = new DOMParser().parseFromString(html, "text/html");
+    const {head} = dom;
+
+
+  // // create a new element with the HTML string
+  //   const element = document.createElement("div");
+  //   element.innerHTML = html;
+    // get the <head> element
+    // const head = element.querySelector("head");
+
+    // get the <meta> elements
+    const meta = head.querySelectorAll("meta");
+    // get url from <meta property="og:url">
+    const url = head.querySelector("meta[property='og:url']")?.getAttribute("content");
+    // get site name from <meta property="og:site_name">
+    const siteName = head.querySelector("meta[property='og:site_name']")?.getAttribute("content");
+    // get title from <title>
+    const title = head.querySelector("title")?.textContent;
+    // get description from <meta property="og:description"> or <meta name="description">
+    const description = head.querySelector("meta[property='og:description']")?.getAttribute("content") || head.querySelector("meta[name='description']")?.getAttribute("content");
+    // get keywords from <meta name="keywords">
+    const keywords = head.querySelector("meta[name='keywords']")?.getAttribute("content")?.split(",").filter((keyword) => keyword.length > 0);
+    // get author from <meta name="author">
+    const author = head.querySelector("meta[name='author']")?.getAttribute("content");
+
+
+
+    // if values are missing, return null. if values are empty, return empty string.
+
   return {
-    url: "https://www.example.com/something/to-test",
-    siteName: "Example Site Name",
-    title: "Example Title",
-    description: "Example description.",
-    keywords: ["example", "keywords"],
-    author: "Example Author",
-  };
+    url: url === "" ? "": url ? url : null,
+    siteName: siteName === "" ? "": siteName ? siteName : null,
+    title: title === "" ? "": title ? title : null,
+    description: description === "" ? "": description ? description : null,
+    keywords: keywords || null,
+    author: author === "" ? "": author ? author : null,
+  }
 }
